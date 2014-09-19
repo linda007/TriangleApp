@@ -1,5 +1,7 @@
 package com.example.triangle;
 
+import com.example.triangleapp01.R;
+
 import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,73 +20,93 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    public void onButtonClick_Calc(View v)
+// Calculate triangle type
+  public void onButtonClick_Calc(View v)
     {
-        CharSequence thesum = "";
-        EditText e1 = (EditText)findViewById(R.id.edit_sides);
-        TextView t1 = (TextView)findViewById(R.id.text_msg);
-        int intarray[] = new int[3];
-        String strarray[] = new String[3];
-        strarray = e1.getText().toString().split(",");
-        for (int count = 0; count < intarray.length ; count++) 
-        {
-            intarray[count] = Integer.parseInt(strarray[count]);
-            thesum=CheckTraingle(intarray);
-        }
-                 
-        t1.setText(thesum);
+	  //variable declarations
+	  
+	  CharSequence cs_Type = "";
+      EditText e1 = (EditText)findViewById(R.id.edit_sides);
+      TextView t1 = (TextView)findViewById(R.id.text_msg);
+      
+      double db_array[] = new double[3];
+      String str_array[] = new String[3];
+      
+      // check for empty text box
+      if(e1.getText().toString().matches(""))
+      {
+      	DisplayMessage("Input value cannot be null.");
+      }
+      // extract values and send input for method
+      else
+      {
+      	str_array = e1.getText().toString().split(",");
+	        for (int count = 0; count < db_array.length ; count++) 
+	        {
+	        	db_array[count] = Double.parseDouble(str_array[count]);
+	        }
+	        cs_Type = CheckTraingle(db_array);        
+	        t1.setText(cs_Type);
+      }
+
     }
     public void onButtonClick_Clear(View v)
     {
     	EditText et = (EditText) findViewById(R.id.edit_sides);
-        et.setText("");
-        
+        et.setText("");      
     }
     public void onButtonClick_Help(View v)
     {
+    	DisplayMessage("Help");
+    }
+    public void DisplayMessage(String str_msg)
+    {	
+    	// This method displays message in a message box with only Ok button
     	AlertDialog.Builder alert_msg  = new AlertDialog.Builder(this);
     	alert_msg.setTitle("TriangleApp");
     	alert_msg.setPositiveButton("Ok",new DialogInterface.OnClickListener()
     	{
-    		@Override
-			public void onClick(DialogInterface dialog, int which) 
+    		public void onClick(DialogInterface dialog, int which) 
     		{
       			
     		 }
     	});
-    	alert_msg.setMessage("Trial message");
+    	alert_msg.setMessage(str_msg);
     	alert_msg.setCancelable(true);
-		alert_msg.create().show();  
+		alert_msg.create().show();  	
+    
+    }
+    public CharSequence CheckTraingle(double db_arrSides[])
+    {
+	   // declare variables
+    	double db_side1,db_side2,db_side3;
+	    db_side1 = db_arrSides[0];
+	    db_side2 = db_arrSides[1];
+	    db_side3=  db_arrSides[2];
+		CharSequence cs_msg= "";
+	    
+		// check if input values form a triangle
+		if ((db_side1 + db_side2 > db_side3)&& (db_side2 + db_side3 > db_side1) && (db_side1 + db_side3 > db_side2))
+	    	{
+				// check for equilateral (all 3 sides are equal)
+				if (db_side1 == db_side2 && db_side2 == db_side3 && db_side1 == db_side3)
+	    		{
+	    			cs_msg = "Equilateral Triangle";
+	    		}
+	    		// check for isoceles ( only 2 sides are equal)
+				else if (db_side1 == db_side2 || db_side2 == db_side3 || db_side3 == db_side1)
+	    		{
+	    			cs_msg ="Isoceles Traingle";
+	    		}   		
+	    	}
+	    	else
+	    	{
+	    		cs_msg = "The input values cannot form a triangle";
+	    	}
+	    	return cs_msg;
     }
     
-public CharSequence CheckTraingle(int arrSides[])
-    {
-    int a,b,c;
-    a=arrSides[0];
-    b=arrSides[1];
-    c=arrSides[2];
-	CharSequence s= "";
-    	if ((a + b > c)&& (b+c>a) && (a+c>b))
-    	{
-    		if (a==b && b==c && a==c)
-    		{
-    			s="Equilateral Triangle";
-    		}
-    		else if (a==b || b==c || c==a)
-    		{
-    			s="Isoceles Traingle";
-    		}
-    		else
-    		 s = "Scalene Triangle";
-    		
-    	}
-    	else
-    	{
-    		s="The input values cannot form a triangle";
-    	}
-    	return s;
-    }
+
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,7 +114,6 @@ public CharSequence CheckTraingle(int arrSides[])
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
