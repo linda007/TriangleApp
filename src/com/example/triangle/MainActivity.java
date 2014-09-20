@@ -39,12 +39,19 @@ public class MainActivity extends ActionBarActivity {
       else
       {
       	str_array = e1.getText().toString().split(",");
+      	if(str_array.length == 3)
+      	{
 	        for (int count = 0; count < db_array.length ; count++) 
 	        {
 	        	db_array[count] = Double.parseDouble(str_array[count]);
 	        }
 	        cs_Type = CheckTraingle(db_array);        
 	        t1.setText(cs_Type);
+      	}
+      	else
+      	{
+      		DisplayMessage("Input should be 3 numbers.");
+      	}
       }
 
     }
