@@ -1,7 +1,5 @@
 package com.example.triangle;
 
-import com.example.triangleapp01.R;
-
 import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
