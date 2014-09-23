@@ -90,6 +90,8 @@ public class MainActivity extends ActionBarActivity {
 	    db_side3=  db_arrSides[2];
 		CharSequence cs_msg= "";
 	    
+		if ((db_side1 > 0 && db_side1 <= 100) && (db_side2 > 0 && db_side2 <= 100) && (db_side3 > 0 && db_side3 <= 100))
+		{
 		// check if input values form a triangle
 		if ((db_side1 + db_side2 > db_side3)&& (db_side2 + db_side3 > db_side1) && (db_side1 + db_side3 > db_side2))
 	    	{
@@ -108,7 +110,15 @@ public class MainActivity extends ActionBarActivity {
 	    	{
 	    		cs_msg = "The input values cannot form a triangle";
 	    	}
-	    	return cs_msg;
+		}
+		else
+		{
+			cs_msg = "Please input 1-100";
+			DisplayMessage("Input should be 1-100 range.");
+		}
+		
+    	return cs_msg;
+
     }
     
 
