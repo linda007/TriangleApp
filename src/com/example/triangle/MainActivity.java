@@ -120,18 +120,28 @@ public class MainActivity extends ActionBarActivity {
       else
       {
       	str_array = e1.getText().toString().split(",");
-      	if(str_array.length == 3)
+      	if( str_array != null)
       	{
-	        for (int count = 0; count < db_array.length ; count++) 
-	        {
-	        	db_array[count] = Double.parseDouble(str_array[count]);
-	        }
-	        cs_Type = CheckTraingle(db_array);        
-	        t1.setText(cs_Type);
-      	}
-      	else
-      	{
-      		DisplayMessage("Input should be 3 numbers.");
+	      	if(str_array.length == 3)
+	      	{
+		        for (int count = 0; count < db_array.length ; count++) 
+		        {
+		        	if( str_array[count].toString().matches(""))
+		        	{
+		        		//DisplayMessage("Invalid input");
+		        		break;
+		        	}
+		        	else
+		        		db_array[count] = Double.parseDouble(str_array[count]);
+		        }
+		        cs_Type = CheckTraingle(db_array);        
+				t1.setText(cs_Type);
+		        
+	      	}
+	      	else
+	      	{
+	      		DisplayMessage("Invalid Input: Input should be 3 numbers.");
+	      	}
       	}
       }
   }
@@ -144,8 +154,9 @@ public class MainActivity extends ActionBarActivity {
 	    db_side3=  db_arrSides[2];
 		CharSequence cs_msg= "";
 	    
-		//* August: db_side1 = > 1
-		if ((db_side1 > 0 && db_side1 <= 100) && (db_side2 > 0 && db_side2 <= 100) && (db_side3 > 0 && db_side3 <= 100))
+		
+		//* Range 1 -100
+		if ((db_side1 >= 1 && db_side1 <= 100) && (db_side2 >= 1 && db_side2 <= 100) && (db_side3 >= 1 && db_side3 <= 100))
 		{
 		// check if input values form a triangle
 		if ((db_side1 + db_side2 > db_side3)&& (db_side2 + db_side3 > db_side1) && (db_side1 + db_side3 > db_side2))
@@ -174,7 +185,7 @@ public class MainActivity extends ActionBarActivity {
 		else
 		{
 			cs_msg = "Please input 1-100";
-			DisplayMessage("Input should be 1-100 range.");
+			//DisplayMessage("Input should be 1-100 range.");
 		}
 		
     	return cs_msg;
