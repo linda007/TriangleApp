@@ -9,4 +9,9 @@
 	<string name="button_calc">Calc</string>
 	<string name="button_clear">Clear</string>
 	<string name="button_help">Help</string>
+	<color name="black">#000000</color>
+	<color name="white">#FFFFFF</color>
+	<color name="green">#8AC007</color>
+	<color name="army">#4B5320</color>
+	
 </resources>

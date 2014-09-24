@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/black"
     tools:context="com.example.triangle.MainActivity" >
 
    <Button
@@ -16,6 +17,8 @@
         android:layout_below="@+id/edit_sides"
         android:layout_marginTop="39dp"
         android:contentDescription="@string/button_calc"
+        android:textColor="@color/white"
+    	android:background="@color/green"
         android:onClick="onButtonClick_Calc"
         android:text="@string/button_calc" />
 
@@ -28,6 +31,8 @@
         android:layout_marginLeft="21dp"
         android:layout_toRightOf="@+id/button2"
         android:contentDescription="@string/button_clear"
+        android:textColor="@color/white"
+    	android:background="@color/army"
         android:onClick="onButtonClick_Clear"
         android:text="@string/button_clear" />
 
@@ -40,6 +45,8 @@
         android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/button1"
         android:contentDescription="@string/button_help"
+        android:textColor="@color/white"
+    	android:background="@color/army"
         android:onClick="onButtonClick_Help"
         android:text="@string/button_help" />
 
@@ -52,6 +59,7 @@
         android:layout_marginTop="46dp"
         android:ems="10"
         android:digits="0123456789.,"
+        android:background="@color/white"
         android:hint="@string/edit_sides" >
 
         <requestFocus />
@@ -61,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:textColor="@color/white"
         android:text="Output_Message" />
     
 
