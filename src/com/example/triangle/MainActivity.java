@@ -28,9 +28,18 @@ public class MainActivity extends ActionBarActivity {
                 {
                 	 switch (keyCode)
                      {
-                         case KeyEvent.KEYCODE_0:
+                     case KeyEvent.KEYCODE_ENTER:
+                    	 Calculate();
+                    	 break;
+                     case KeyEvent.KEYCODE_COMMA:
+                 	 	 if(et.getText().toString().lastIndexOf(',') == 3)
+                    	 {
+                    		 DisplayMessage("Maximum number of inputs allowed is 3",3 );
+                    	 }
+                 	 	 break;
+                    case KeyEvent.KEYCODE_0:
                          	if(et.getText().toString().matches(""))
-                         	DisplayMessage("The End");
+                         	DisplayMessage("The End" ,1);
                           default:
                              break;
                      }
@@ -55,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
   
   public void onButtonClick_Help(View v)
   {
-  	DisplayMessage("Help");
+  	DisplayMessage("Help",3);
   }
   
   public void ClearFields()
@@ -66,12 +75,12 @@ public class MainActivity extends ActionBarActivity {
       t1.setText("Output_Message");
   }
   
-  public void DisplayMessage(String str_msg)
+  public void DisplayMessage(String str_msg, int int_case)
     {	
     	// This method displays message in a message box with only Ok button
     	AlertDialog.Builder alert_msg  = new AlertDialog.Builder(this);
     	alert_msg.setTitle("TriangleApp");
-    	if(str_msg == "The End")
+    	if(int_case == 1)
     	{
 	    	alert_msg.setPositiveButton("Ok",new DialogInterface.OnClickListener()
 	    	{
@@ -83,13 +92,23 @@ public class MainActivity extends ActionBarActivity {
 	    		 }
 	    	});
     	}
-    	else
+    	else if ( int_case == 2)
     	{
     		alert_msg.setPositiveButton("Ok",new DialogInterface.OnClickListener()
         	{
         		public void onClick(DialogInterface dialog, int which) 
         		{
         			ClearFields();
+        		 }
+        	});
+    	}
+    	else if ( int_case == 3)
+    	{
+    		alert_msg.setPositiveButton("Ok",new DialogInterface.OnClickListener()
+        	{
+        		public void onClick(DialogInterface dialog, int which) 
+        		{
+        			
         		 }
         	});
     	}
@@ -106,41 +125,43 @@ public class MainActivity extends ActionBarActivity {
       EditText e1 = (EditText)findViewById(R.id.edit_sides);
       TextView t1 = (TextView)findViewById(R.id.text_msg);
       
-      double db_array[] = new double[3];
-      String str_array[] = new String[3];
       
+            
       // check for empty text box
       if(e1.getText().toString().matches(""))
       {
-      	DisplayMessage("Input value cannot be null.");
+      	DisplayMessage("Input value cannot be null.",2);
       }
       // extract values and send input for method
       else
       {
-      	str_array = e1.getText().toString().split(",");
-      	if( str_array != null)
-      	{
-	      	if(str_array.length == 3)
-	      	{
-		        for (int count = 0; count < db_array.length ; count++) 
-		        {
-		        	if( str_array[count].toString().matches(""))
-		        	{
-		        		//DisplayMessage("Invalid input");
-		        		break;
-		        	}
-		        	else
-		        		db_array[count] = Double.parseDouble(str_array[count]);
-		        }
-		        cs_Type = CheckTraingle(db_array);        
-				t1.setText(cs_Type);
-		        
-	      	}
-	      	else
-	      	{
-	      		DisplayMessage("Invalid Input: Input should be 3 numbers.");
-	      	}
-      	}
+    	  int int_index =e1.getText().toString().indexOf(',');
+    	  if(int_index > 0)
+    	  {
+    		  String str_array[] = e1.getText().toString().split(",");
+    		  double db_array[] = new double[3];
+    		  if(str_array.length == 3)
+		      	{
+          		   for (int count = 0; count < str_array.length ; count++) 
+    		        {
+    		        	if( str_array[count].toString().equals("") == false)
+    		        	{
+    		        		db_array[count] = Double.parseDouble(str_array[count]);
+    		        	}
+    		        		
+    		        }
+    	      		cs_Type = CheckTraingle(db_array);        
+    				t1.setText(cs_Type);      	
+		      	}
+	    		else
+			    {
+			      	DisplayMessage("Invalid Input: Input should be 3 numbers.",2);
+			    }
+    	  }
+    	  else
+		  {
+		      	DisplayMessage("Invalid Input: Input should be 3 numbers.",2);
+		  }
       }
   }
   public CharSequence CheckTraingle(double db_arrSides[])
@@ -152,38 +173,44 @@ public class MainActivity extends ActionBarActivity {
 	    db_side3=  db_arrSides[2];
 		CharSequence cs_msg= "";
 	    
-		
-		//* Range 1 -100
-		if ((db_side1 >= 1 && db_side1 <= 100) && (db_side2 >= 1 && db_side2 <= 100) && (db_side3 >= 1 && db_side3 <= 100))
+		if (db_side1 > 0 && db_side2 > 0 && db_side3 > 0)
 		{
-		// check if input values form a triangle
-		if ((db_side1 + db_side2 > db_side3)&& (db_side2 + db_side3 > db_side1) && (db_side1 + db_side3 > db_side2))
-	    	{
-				// check for equilateral (all 3 sides are equal)
-				if (db_side1 == db_side2 && db_side2 == db_side3 && db_side1 == db_side3)
-	    		{
-	    			cs_msg = "Equilateral";
-	    		}
-	    		// check for isosceles ( only 2 sides are equal)
-				else if (db_side1 == db_side2 || db_side2 == db_side3 || db_side3 == db_side1)
-	    		{
-	    			cs_msg ="Isosceles";
-	    		} 
-				//check for scalene triangle
-				else
-				{
-					cs_msg = "Scalene";
-				}
-	    	}
-	    	else
-	    	{
-	    		cs_msg = "The input values cannot form a triangle";
-	    	}
+		//* Range 1 -100
+			if ((db_side1 >= 1 && db_side1 <= 100) && (db_side2 >= 1 && db_side2 <= 100) && (db_side3 >= 1 && db_side3 <= 100))
+			{
+			    // check if input values form a triangle
+				if ((db_side1 + db_side2 > db_side3)&& (db_side2 + db_side3 > db_side1) && (db_side1 + db_side3 > db_side2))
+		    	{
+					// check for equilateral (all 3 sides are equal)
+					if (db_side1 == db_side2 && db_side2 == db_side3 && db_side1 == db_side3)
+		    		{
+		    			cs_msg = "Equilateral";
+		    		}
+		    		// check for isosceles ( only 2 sides are equal)
+					else if (db_side1 == db_side2 || db_side2 == db_side3 || db_side3 == db_side1)
+		    		{
+		    			cs_msg ="Isosceles";
+		    		} 
+					//check for scalene triangle
+					else
+					{
+						cs_msg = "Scalene";
+					}
+		    	}
+		    	else
+		    	{
+		    		cs_msg = "The input values cannot form a triangle";
+		    	}
+			}
+			else
+			{
+				cs_msg = "Input should be within 1-100 range.";
+				//DisplayMessage("Input should be 1-100 range.");
+			}
 		}
 		else
 		{
-			cs_msg = "Please input 1-100";
-			//DisplayMessage("Input should be 1-100 range.");
+			DisplayMessage("Invalid Input: Input should be 3 numbers.",2);
 		}
 		
     	return cs_msg;
