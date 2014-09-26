@@ -20,6 +20,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final EditText et = (EditText) findViewById(R.id.edit_sides);
+       
         et.setOnKeyListener(new OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -28,16 +29,12 @@ public class MainActivity extends ActionBarActivity {
                 {
                 	 switch (keyCode)
                      {
-                     case KeyEvent.KEYCODE_ENTER:
+                	 // enter key press
+                     	case KeyEvent.KEYCODE_ENTER:
                     	 Calculate();
                     	 break;
-                     case KeyEvent.KEYCODE_COMMA:
-                 	 	 if(et.getText().toString().lastIndexOf(',') == 3)
-                    	 {
-                    		 DisplayMessage("Maximum number of inputs allowed is 3",3 );
-                    	 }
-                 	 	 break;
-                    case KeyEvent.KEYCODE_0:
+                     	 // zero key press
+                     	case KeyEvent.KEYCODE_0:
                          	if(et.getText().toString().matches(""))
                          	DisplayMessage("The End" ,1);
                           default:
@@ -62,14 +59,10 @@ public class MainActivity extends ActionBarActivity {
   	ClearFields();
   }
   
-  public void onButtonClick_Help(View v)
+   public void ClearFields()
   {
-  	DisplayMessage("Help",3);
-  }
-  
-  public void ClearFields()
-  {
-  	EditText et = (EditText) findViewById(R.id.edit_sides);
+  	// clear all text fields
+	  EditText et = (EditText) findViewById(R.id.edit_sides);
       et.setText("");    
       TextView t1 = (TextView)findViewById(R.id.text_msg);
       t1.setText("Output_Message");
@@ -124,9 +117,7 @@ public class MainActivity extends ActionBarActivity {
 	    CharSequence cs_Type = "";
       EditText e1 = (EditText)findViewById(R.id.edit_sides);
       TextView t1 = (TextView)findViewById(R.id.text_msg);
-      
-      
-            
+                 
       // check for empty text box
       if(e1.getText().toString().matches(""))
       {
@@ -135,11 +126,13 @@ public class MainActivity extends ActionBarActivity {
       // extract values and send input for method
       else
       {
-    	  int int_index =e1.getText().toString().indexOf(',');
+    	  
+    	  int int_index = e1.getText().toString().indexOf(',');
     	  if(int_index > 0)
     	  {
     		  String str_array[] = e1.getText().toString().split(",");
     		  double db_array[] = new double[3];
+    		  int int_counter = 0;
     		  if(str_array.length == 3)
 		      	{
           		   for (int count = 0; count < str_array.length ; count++) 
@@ -147,11 +140,18 @@ public class MainActivity extends ActionBarActivity {
     		        	if( str_array[count].toString().equals("") == false)
     		        	{
     		        		db_array[count] = Double.parseDouble(str_array[count]);
-    		        	}
-    		        		
+    		        		int_counter++;
+    		        	}  		        		
     		        }
-    	      		cs_Type = CheckTraingle(db_array);        
-    				t1.setText(cs_Type);      	
+          		   if (int_counter == 3)
+          		   {
+	    	      		cs_Type = CheckTraingle(db_array);        
+	    				t1.setText(cs_Type);
+          		   }
+          		   else
+          		   {
+          			 DisplayMessage("Invalid Input: Input should be 3 numbers.",2);
+          		   }
 		      	}
 	    		else
 			    {
@@ -210,7 +210,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		else
 		{
-			DisplayMessage("Invalid Input: Input should be 3 numbers.",2);
+			DisplayMessage("Input should be within 1-100 range",2);
 		}
 		
     	return cs_msg;
